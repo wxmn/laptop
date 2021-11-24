@@ -46,11 +46,11 @@ fi
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-HOMEBREW_PREFIX="/usr/local"
+HOMEBREW_PREFIX="/opt"
 
 if [ -d "$HOMEBREW_PREFIX" ]; then
   if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
+    sudo chown -R "$LOGNAME:admin" /opt
   fi
 else
   sudo mkdir "$HOMEBREW_PREFIX"
@@ -69,6 +69,10 @@ update_shell() {
   fi
   sudo chsh -s "$shell_path" "$USER"
 }
+
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 
 case "$SHELL" in
   */zsh)
@@ -142,6 +146,34 @@ brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
 cask "gpg-suite"
+brew "frum"
+
+cask "iterm2"
+cask "sublime-text"
+cask "sublime-merge"
+cask "github"
+cask "loom"
+# cask "spotify"
+cask "discord"
+# cask "asana"
+# cask "notion"
+cask "hey"
+# cask "superhuman"
+cask "microsoft-word"
+cask "microsoft-excel"
+cask "sunsama"
+# cask "slack"
+# cask "telegram"
+
+
+# cask "1password"
+cask "1password-cli"
+cask "adobe-creative-cloud"
+# cask "alfred"
+# cask "backblaze"
+# cask "google-chrome"
+# cask "cleanshot"
+
 
 # Databases
 brew "postgres", restart_service: :changed
